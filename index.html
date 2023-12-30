@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Responsive</title>
+
+  <!-- CSS -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #qrImageContainer {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+    overflow: hidden; /* Để ảnh overlay không tràn ra ngoài */
+  }
+
+  #qrImageContainer img {
+      display: block;
+      width: 100%;
+      height: auto;
+  }
+
+  #overlayImage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.19, 0.19);
+      opacity: 1;
+      z-index: 1;
+  }
+  body {
+    text-align: center;
+    padding-top: 5vh;
+  }
+  input {
+    height: 25px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  </style>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1>Nhiều thì donate 500k, ít thì 50k !</h1>
+  <br>
+  <label for="amount">amount : </label>
+  <input type="text" id="amount" placeholder="Amount" value="10000">
+
+  <label for="amount">description : </label>
+  <input type="text" id="des" value="donate quang" placeholder="Description">
+
+  <div id="qrImageContainer">
+    <img id="qrImage" alt="QR Code Bank">
+    <img id="overlayImage"
+      src="https://st4.depositphotos.com/16030310/25210/v/450/depositphotos_252102276-stock-illustration-vector-illustration-silver-golden-letters.jpg"
+      alt="Overlay Image">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    const amount = $("#amount").val();
+    const des = $("#des").val();
+    const newSrc = `https://qr.sepay.vn/img?acc=8154461&bank=970416&amount=${amount}&des=${des}`;
+    $("#qrImage").attr("src", newSrc);
+
+    function updateQRCode() {
+        const amount = $("#amount").val();
+        const des = $("#des").val();
+        const newSrc = `https://qr.sepay.vn/img?acc=8154461&bank=970416&amount=${amount}&des=${des}`;
+        $("#qrImage").attr("src", newSrc);
+    }
+
+    $("#amount, #des").on("input", function () {
+        updateQRCode();
+    });
+
+    $("#amount").on("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        updateQRCode();
+    });
+
+  </script>
+</body>
+
+</html>
